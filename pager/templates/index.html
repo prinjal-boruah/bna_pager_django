@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Voice Controlled Notes App</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shoelace-css/1.0.0-beta16/shoelace.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+  <script>
+    function getZones() {
+      $.ajax({         
+        type: "GET",
+        url: 'http://106.51.15.203/api/api.php?action=LIST&type=PAGE',
+        headers: { 'Access-Control-Allow-Origin': '*' },
+        crossDomain: true,
+        success: function(result){
+            console.log(result);
+        } 
+      });
+    }
+  </script>
+  <style>
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+
+    button:focus {
+      outline: 0;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 100px 50px 10px 50px;
+      text-align: center;
+    }
+
+    #table_container {
+      max-width: 90vw;
+      margin: 0 auto;
+      padding: 30px 10px;
+      text-align: center;
+    }
+
+    .container h1 {
+      margin-bottom: 20px;
+    }
+
+    .page-description {
+      font-size: 1.1rem;
+      margin: 0 auto;
+    }
+
+    .tz-link {
+      font-size: 1em;
+      color: #1da7da;
+      text-decoration: none;
+    }
+
+    .no-browser-support {
+      display: none;
+      font-size: 1.2rem;
+      color: #e64427;
+      margin-top: 35px;
+    }
+
+    .app {
+      margin: 40px auto;
+    }
+
+    #note-textarea {
+      margin: 20px 0;
+    }
+
+    #recording-instructions {
+      margin: 15px auto 60px;
+    }
+
+    #notes {
+      padding-top: 20px;
+    }
+
+    .note .header {
+      font-size: 0.9em;
+      color: #888;
+      margin-bottom: 10px;
+    }
+
+    .note .delete-note,
+    .note .listen-note {
+      text-decoration: none;
+      margin-left: 15px;
+    }
+
+    .note .content {
+      margin-bottom: 40px;
+    }
+
+    .voice_select {
+      margin-bottom: 20px;
+    }
+
+    body {
+      color: #fff;
+      background-repeat: no-repeat;
+      background-image: url(https://i.ibb.co/5LXBcSV/Desktop-5-1.png);
+      background-size: cover;
+      min-height: 100vh;
+    }
+
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 50px 25px;
+        margin: 0 auto;
+      }
+
+      button {
+        margin-bottom: 10px;
+      }
+
+    }
+
+    span {
+      color: white !important;
+    }
+
+    .listen-note {
+      color: black !important;
+      border: 1px solid white;
+      border-radius: 5px;
+      padding: 4px 10px;
+    }
+
+    .listen-note:hover {
+      background-color: #0bad9e;
+      color: white !important;
+    }
+
+    .delete-note {
+      color: red;
+    }
+
+
+
+    /* -- Demo ads -- */
+
+    @media (max-width: 1200px) {
+      #bsaHolder {
+        display: none;
+      }
+    }
+  </style>
+
+</head>
+
+<body onload="getZones()">
+
+  <div class="container">
+
+  <h3 class="no-browser-support">Sorry, Your Browser Doesn't Support the Web Speech API. Try Opening This Demo In
+    Google Chrome.</h3>
+
+  <div class="app">
+    <h3>BNA Voice App</h3>
+    <div class="input-single">
+      <textarea id="note-textarea" placeholder="Create a new note by typing or using voice recognition."
+        rows="6"></textarea>
+    </div>
+    <select class="voice_select">
+      <option value="hi-IN" selected="selected">Hindi</option>
+      <option value="en-US">English</option>
+    </select>
+    <button id="start-record-btn" title="Start Recording">Start Recognition</button>
+    <button id="pause-record-btn" title="Pause Recording">Pause Recognition</button>
+    <button id="save-note-btn" title="Save Note">Save Note</button>
+    <p id="recording-instructions">Press the <strong>Start Recognition</strong> button and allow access.</p>
+  </div>
+
+  </div>
+  <div id="table_container">
+    <table id="main_table" class="table table-striped table-bordered" style="width:100%">
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>File Name</th>
+          <th>Play Audio</th>
+          <th>Language</th>
+          <th>Text</th>
+          <th>Select Zone</th>
+          <th>Send Audio</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for audio in audio_files %}
+        <tr>
+          <td>{{ audio.id }}</td>
+          <td>{{ audio.manual_id }}.mp3</td>
+          <td><audio controls>
+              <source src="{{ audio.audioFile.url }}" type="audio/mpeg"></audio></td>
+          <td>{{ audio.lang }}</td>
+          <td>{{ audio.text }}</td>
+          <td><select name="Select Zone" id=""></select></td>
+          <td><Button>Send</Button></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      $('#main_table').DataTable();
+      var noteTextarea = $('#note-textarea');
+      var instructions = $('#recording-instructions');
+      var notesList = $('ul#notes');
+
+      var noteContent = '';
+
+      try {
+        var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        var recognition = new SpeechRecognition();
+
+
+        recognition.continuous = true;
+
+        recognition.onresult = function (event) {
+          var current = event.resultIndex;
+          // Get a transcript of what was said.
+          var transcript = event.results[current][0].transcript;
+          var mobileRepeatBug = (current == 1 && transcript == event.results[0][0].transcript);
+
+          if (!mobileRepeatBug) {
+            noteContent += transcript;
+            noteTextarea.val(noteContent);
+          }
+        };
+
+        recognition.onstart = function () {
+          instructions.text('Voice recognition activated. Try speaking into the microphone.');
+        }
+
+        recognition.onspeechend = function () {
+          instructions.text('You were quiet for a while so voice recognition turned itself off.');
+        }
+
+        recognition.onerror = function (event) {
+          if (event.error == 'no-speech') {
+            instructions.text('No speech was detected. Try again.');
+          };
+        }
+      }
+      catch (e) {
+        console.error(e);
+      }
+
+
+
+      /*-----------------------------
+            App buttons and input 
+      ------------------------------*/
+
+      $('#start-record-btn').on('click', function (e) {
+        if (noteContent.length) {
+          noteContent += ' ';
+        }
+        recognition.start();
+      });
+
+
+      $('#pause-record-btn').on('click', function (e) {
+        recognition.stop();
+        instructions.text('Voice recognition paused.');
+      });
+
+      // Sync the text inside the text area with the noteContent variable.
+      noteTextarea.on('input', function () {
+        noteContent = $(this).val();
+      })
+
+      $('#save-note-btn').on('click', function (e) {
+        try { recognition.stop(); }
+        catch (e) {
+          console.log(e);
+        }
+
+        if (!noteContent.length) {
+          instructions.text('Could not save empty note. Please add a message to your note.');
+        }
+        else {
+          postToDjango(noteContent);
+          readOutLoud(noteContent);
+        }
+
+      })
+
+
+      /*-----------------------------
+            Speech Synthesis 
+      ------------------------------*/
+      var dropdown_val = "hi-EN"
+
+      $(".voice_select").change(function () {
+        dropdown_val = $(".voice_select").val();
+      });
+
+      function readOutLoud(message) {
+        var speech = new SpeechSynthesisUtterance();
+
+        speech.text = message;
+        speech.volume = 1;
+        speech.rate = 1;
+        speech.pitch = 1;
+        speech.lang = dropdown_val;
+
+        window.speechSynthesis.speak(speech);
+      }
+
+
+
+      /*-----------------------------
+            Helper Functions 
+      ------------------------------*/
+
+      function postToDjango(textData) {
+        $.ajax({
+          type: "GET",
+          url: "/savetextaudio/",
+          data: {
+            "text": textData,
+            "language": dropdown_val,
+          },
+          success: function (data) {
+            console.log("success");
+            console.log(data);
+            // $('#main_table').DataTable();
+            location.reload();
+          },
+          failure: function (data) {
+            console.log("failure");
+            console.log(data);
+          },
+        });
+      }
+    })
+
+  </script>
+
+
+</body>
+
+</html>
