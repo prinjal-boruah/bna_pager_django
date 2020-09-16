@@ -1,1 +1,1 @@
-web: gunicorn BNA_pager.wsgi:application --log-file -
+web: gunicorn bnaPager.wsgi:application --log-file -
