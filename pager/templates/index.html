@@ -163,7 +163,8 @@
 
 </head>
 
-<body onload="getZones()">
+<!-- <body onload="getZones()"> -->
+<body>
 
   <div class="container">
 
@@ -209,7 +210,13 @@
               <source src="{{ audio.audioFile.url }}" type="audio/mpeg"></audio></td>
           <td>{{ audio.lang }}</td>
           <td>{{ audio.text }}</td>
-          <td><select name="Select Zone" id=""></select></td>
+          <td>
+            <select name="Select Zone" id="">
+              {% for zone in zones %}
+              <option value="{{ zone }}">{{ zone }}</option>
+              {% endfor %}
+            </select>
+          </td>
           <td><Button>Send</Button></td>
         </tr>
         {% endfor %}

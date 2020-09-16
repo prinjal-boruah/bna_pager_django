@@ -3,10 +3,14 @@ from . models import *
 from gtts import gTTS
 import time
 from django.http import HttpResponse
+import requests
 
 def indexView(request):
+    x = requests.get('http://106.51.15.203/api/api.php?action=LIST&type=PAGE')
+    list_of_zones = x.json()
     context = {
-        'audio_files' : SpeechData.objects.all()
+        'audio_files' : SpeechData.objects.all(),
+        'zones': list_of_zones,
     }
     return render(request, 'index.html', context)
 
