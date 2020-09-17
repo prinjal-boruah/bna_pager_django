@@ -8,12 +8,19 @@ from datetime import datetime
 from pytz import timezone
 
 def indexView(request):
-    x = requests.get('http://106.51.15.203/api/api.php?action=LIST&type=PAGE')
-    list_of_zones = x.json()
-    context = {
-        'audio_files' : SpeechData.objects.all(),
-        'zones': list_of_zones,
-    }
+    try:
+        x = requests.get('http://106.51.15.203/api/api.php?action=LIST&type=PAGE')              
+        list_of_zones = x.json()
+        context = {
+            'audio_files' : SpeechData.objects.all(),
+            'zones': list_of_zones,
+        }
+    except:
+        context = {
+            'audio_files' : SpeechData.objects.all(),
+            'zones': [["Could not fetch data"]],
+        }      
+
     return render(request, 'index.html', context)
 
 def saveTextAudio(request):
