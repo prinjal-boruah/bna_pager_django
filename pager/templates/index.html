@@ -30,7 +30,7 @@
     .container {
       max-width: 700px;
       margin: 0 auto;
-      padding: 100px 50px 10px 50px;
+      padding: 50px 50px 10px 50px;
       text-align: center;
     }
 
@@ -128,6 +128,19 @@
       margin-left: 20px;
     }
 
+    #scrollBtn{
+      margin: -30px auto 0 auto;
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+      border: 1px solid #fff;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    #scrollBtn :hover {
+      cursor: pointer;
+      box-shadow:  0 8px 6px -6px black;
+    }
 
     @media (max-width: 768px) {
       .container {
@@ -203,12 +216,13 @@
 <body>
   <header>
     <div>
-      <img src="https://i.ibb.co/xqXrzHh/android-chrome-512x512.png" alt="" height="30px" width="30px" style="margin-top: -8px;">
+      <img src="https://i.ibb.co/xqXrzHh/android-chrome-512x512.png" alt="" height="30px" width="30px"
+        style="margin-top: -8px;">
       <h5 style="display: inline;margin-left: 10px;">BNA Paging App</h5>
     </div>
     <div>
       <span>Contact Us</span>
-      <button id="login_btn" >Login</button>
+      <button id="login_btn">Login</button>
     </div>
   </header>
 
@@ -219,7 +233,8 @@
 
     <div class="app">
       <!-- <h3>BNA Audio Paging App</h3> -->
-      <img src="https://i.ibb.co/985t4v6/miclogo.png" alt="mic-image" height="100px" width="100px" style="border-radius: 50%;">
+      <img src="https://i.ibb.co/985t4v6/miclogo.png" alt="mic-image" height="100px" width="100px"
+        style="border-radius: 50%;">
       <div class="input-single">
         <textarea id="note-textarea" placeholder="Create a new note by typing or using voice recognition."
           rows="6"></textarea>
@@ -233,6 +248,7 @@
       <button id="save-note-btn" title="Save Note">Save Note</button>
       <p id="recording-instructions">Press the <strong>Start Recognition</strong> button and allow access.</p>
     </div>
+    <div id="scrollBtn"><i class="fa fa-angle-down" style="font-size:50px"></i></div>
 
   </div>
   <div id="table_container">
@@ -295,6 +311,13 @@
       // $('#main_table').DataTable();
       var table = $('#main_table').DataTable({
         responsive: true
+      });
+
+      $("#scrollBtn").click(function () {
+        $('html,body').animate({
+          scrollTop: $("#table_container").offset().top
+        },
+          'slow');
       });
 
       new $.fn.dataTable.FixedHeader(table);
