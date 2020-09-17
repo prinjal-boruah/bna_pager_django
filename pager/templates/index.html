@@ -207,15 +207,6 @@
       color: #fff;
     }
 
-
-
-    /* -- Demo ads -- */
-
-    @media (max-width: 1200px) {
-      #bsaHolder {
-        display: none;
-      }
-    }
   </style>
 
 </head>
@@ -243,9 +234,8 @@
       Google Chrome.</h3>
 
     <div class="app">
-      <!-- <h3>BNA Audio Paging App</h3> -->
       <img src="https://i.ibb.co/985t4v6/miclogo.png" alt="mic-image" height="100px" width="100px"
-        style="border-radius: 50%;">
+        style="border-radius: 50%;box-shadow:  0 8px 20px 0px #1c1d1d">
       <div class="input-single">
         <textarea id="note-textarea" placeholder="Create a new note by typing or using voice recognition."
           rows="6"></textarea>
@@ -256,7 +246,7 @@
       </select>
       <button id="start-record-btn" title="Start Recording">Start Recognition</button>
       <button id="pause-record-btn" title="Pause Recording">Pause Recognition</button>
-      <button id="save-note-btn" title="Save Note">Save Note</button>
+      <button id="save-note-btn" title="Save Note">Save Audio</button>
       <p id="recording-instructions">Press the <strong>Start Recognition</strong> button and allow access.</p>
     </div>
     <div id="scrollBtn"><i class="fa fa-angle-down" style="font-size:50px"></i></div>
@@ -315,14 +305,15 @@
   </footer>
   <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-  <script src="https://cdn.datatables.net/fixedheader/3.1.7/js/dataTables.fixedHeader.min.js"></script>
+  <!-- <script src="https://cdn.datatables.net/fixedheader/3.1.7/js/dataTables.fixedHeader.min.js"></script> -->
   <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
   <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap.min.js"></script>
   <script>
     $(document).ready(function () {
-      // $('#main_table').DataTable();
+
       var table = $('#main_table').DataTable({
-        responsive: true
+        responsive: true,
+        "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]]
       });
 
       $("#scrollBtn").click(function () {
@@ -332,7 +323,7 @@
           'slow');
       });
 
-      new $.fn.dataTable.FixedHeader(table);
+      // new $.fn.dataTable.FixedHeader(table);
       var noteTextarea = $('#note-textarea');
       var instructions = $('#recording-instructions');
       var notesList = $('ul#notes');
