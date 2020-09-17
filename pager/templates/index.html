@@ -6,6 +6,7 @@
   <title>Voice Controlled Notes App</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="https://i.ibb.co/xqXrzHh/android-chrome-512x512.png" type="image/gif" sizes="16x16">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shoelace-css/1.0.0-beta16/shoelace.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
@@ -13,25 +14,12 @@
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-  <script>
-    function getZones() {
-      $.ajax({         
-        type: "GET",
-        url: 'http://106.51.15.203/api/api.php?action=LIST&type=PAGE',
-        headers: { 'Access-Control-Allow-Origin': '*' },
-        crossDomain: true,
-        success: function(result){
-            console.log(result);
-        } 
-      });
-    }
-  </script>
+
   <style>
     ul {
       list-style: none;
       padding: 0;
     }
-
 
     button:focus {
       outline: 0;
@@ -109,6 +97,10 @@
       margin-bottom: 20px;
     }
 
+    table {
+      font-size: 0.875em;
+    }
+
     body {
       color: #fff;
       background-repeat: no-repeat;
@@ -163,36 +155,38 @@
 
 </head>
 
-<!-- <body onload="getZones()"> -->
 <body>
 
   <div class="container">
 
-  <h3 class="no-browser-support">Sorry, Your Browser Doesn't Support the Web Speech API. Try Opening This Demo In
-    Google Chrome.</h3>
+    <h3 class="no-browser-support">Sorry, Your Browser Doesn't Support the Web Speech API. Try Opening This Demo In
+      Google Chrome.</h3>
 
-  <div class="app">
-    <h3>BNA Voice App</h3>
-    <div class="input-single">
-      <textarea id="note-textarea" placeholder="Create a new note by typing or using voice recognition."
-        rows="6"></textarea>
+    <div class="app">
+      <h3>BNA Audio Paging App</h3>
+      <div class="input-single">
+        <textarea id="note-textarea" placeholder="Create a new note by typing or using voice recognition."
+          rows="6"></textarea>
+      </div>
+      <select class="voice_select">
+        <option value="hi-IN" selected="selected">Hindi</option>
+        <option value="en-US">English</option>
+      </select>
+      <button id="start-record-btn" title="Start Recording">Start Recognition</button>
+      <button id="pause-record-btn" title="Pause Recording">Pause Recognition</button>
+      <button id="save-note-btn" title="Save Note">Save Note</button>
+      <p id="recording-instructions">Press the <strong>Start Recognition</strong> button and allow access.</p>
     </div>
-    <select class="voice_select">
-      <option value="hi-IN" selected="selected">Hindi</option>
-      <option value="en-US">English</option>
-    </select>
-    <button id="start-record-btn" title="Start Recording">Start Recognition</button>
-    <button id="pause-record-btn" title="Pause Recording">Pause Recognition</button>
-    <button id="save-note-btn" title="Save Note">Save Note</button>
-    <p id="recording-instructions">Press the <strong>Start Recognition</strong> button and allow access.</p>
-  </div>
 
   </div>
   <div id="table_container">
     <table id="main_table" class="table table-striped table-bordered" style="width:100%">
       <thead>
         <tr>
-          <th>id</th>
+          <th>Select</th>
+          <th>Id</th>
+          <th>Date</th>
+          <th>Time</th>
           <th>File Name</th>
           <th>Play Audio</th>
           <th>Language</th>
@@ -204,10 +198,16 @@
       <tbody>
         {% for audio in audio_files %}
         <tr>
+          <td><input type="checkbox" id="" name="" value=""></td>
           <td>{{ audio.id }}</td>
+          <td>{{ audio.date }}</td>
+          <td>{{ audio.time }}</td>
           <td>{{ audio.manual_id }}.mp3</td>
-          <td><audio controls>
-              <source src="{{ audio.audioFile.url }}" type="audio/mpeg"></audio></td>
+          <td>
+            <audio controls >
+              <source src="{{ audio.audioFile.url }}" type="audio/mpeg">
+            </audio>
+          </td>
           <td>{{ audio.lang }}</td>
           <td>{{ audio.text }}</td>
           <td>
@@ -269,8 +269,6 @@
       catch (e) {
         console.error(e);
       }
-
-
 
       /*-----------------------------
             App buttons and input 
