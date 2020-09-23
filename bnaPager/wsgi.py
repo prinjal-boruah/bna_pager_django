@@ -9,20 +9,20 @@ https://docs.djangoproject.com/en/2.2/howto/deployment/wsgi/
 
 
 ## for other servers
-# import os
+import os
 
-# from django.core.wsgi import get_wsgi_application
+from django.core.wsgi import get_wsgi_application
 
-# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'bnaPager.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'bnaPager.settings')
 
-# application = get_wsgi_application()
+application = get_wsgi_application()
 
 ##for heroku
 
-import os
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'bnaPager.settings')
-from django.core.wsgi import get_wsgi_application
-from whitenoise.django import DjangoWhiteNoise
+# import os
+# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'bnaPager.settings')
+# from django.core.wsgi import get_wsgi_application
+# from whitenoise.django import DjangoWhiteNoise
 
-application = get_wsgi_application()
-application = DjangoWhiteNoise(application)
+# application = get_wsgi_application()
+# application = DjangoWhiteNoise(application)
