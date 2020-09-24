@@ -1,0 +1,179 @@
+ul {
+    list-style: none;
+    padding: 0;
+  }
+
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 50px 50px 10px 50px;
+    text-align: center;
+  }
+
+.container h1 {
+    margin-bottom: 20px;
+  }
+
+button:focus {
+    outline: 0;
+  }
+
+#table_container {
+    max-width: 90vw;
+    margin: 0 auto;
+    padding: 30px 10px;
+    text-align: center;
+  }
+
+  
+
+.page-description {
+    font-size: 1.1rem;
+    margin: 0 auto;
+  }
+
+.tz-link {
+    font-size: 1em;
+    color: #1da7da;
+    text-decoration: none;
+  }
+
+.no-browser-support {
+    display: none;
+    font-size: 1.2rem;
+    color: #e64427;
+    margin-top: 35px;
+  }
+
+.app {
+    margin: 0px auto;
+  }
+
+#note-textarea {
+    margin: 20px 0;
+  }
+
+#recording-instructions {
+    margin: 15px auto 60px;
+  }
+
+#notes {
+    padding-top: 20px;
+  }
+
+.note .header {
+    font-size: 0.9em;
+    color: #888;
+    margin-bottom: 10px;
+  }
+
+.note .delete-note,
+.note .listen-note {
+    text-decoration: none;
+    margin-left: 15px;
+  }
+
+.note .content {
+    margin-bottom: 40px;
+  }
+
+.voice_select {
+    margin-bottom: 20px;
+  }
+
+  table {
+    font-size: 0.875em;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 60px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.1);
+    align-items: center;
+  }
+
+  #login_btn {
+    width: 150px;
+    background: #0062c4;
+    border-radius: 25px;
+    margin-left: 20px;
+  }
+
+  #login_btn a {
+    text-decoration: none;
+    color: #fff;
+  }
+
+  #scrollBtn{
+    margin: -30px auto 0 auto;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border: 1px solid #fff;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  #scrollBtn :hover {
+    cursor: pointer;
+    box-shadow:  0 8px 6px -6px black;
+  }
+
+  span {
+    color: white !important;
+  }
+
+  .listen-note {
+    color: black !important;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 4px 10px;
+  }
+
+  .listen-note:hover {
+    background-color: #0bad9e;
+    color: white !important;
+  }
+
+  .delete-note {
+    color: red;
+  }
+
+  #send_all_div {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    margin: 10px 10px 30px 10px;
+  }
+
+  #all_bttn {
+    border-radius: 20px;
+    min-width: 40vw;
+  }
+
+  #stop_bttn {
+    border-radius: 5px;
+    margin: 0 10px;
+  }
+
+  table th {
+    text-align: center;
+    color: #fff;
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 50px 25px;
+      margin: 0 auto;
+    }
+
+    button {
+      margin-bottom: 10px;
+    }
+
+    header {
+      display: none;
+    }
+
+  }
