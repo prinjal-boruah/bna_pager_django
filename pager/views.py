@@ -82,16 +82,18 @@ class SpeechPostView(viewsets.ViewSet):
         else:
             language = 'en'
 
+        received_text = request.data['text']
+
         current_time = str(round(time.time()))
         audio_save_location = "./media/audio/"+current_time+".mp3" #name of audio file
         audio_save_location_django = "audio/"+current_time+".mp3"
-        myobj = gTTS(text=request.data['text'], lang=language, slow=False)
+        myobj = gTTS(text=received_text, lang=language, slow=False)
         myobj.save(audio_save_location)
 
         serializer = SpeechSerializer(data=request.data)
         if serializer.is_valid():
-            savetext = SpeechData(text=request.data['text'], manual_id=current_time, audioFile=audio_save_location_django, lang=language, date = date_now, time = time_now)
+            savetext = SpeechData(text=received_text, manual_id=current_time, audioFile=audio_save_location_django, lang=language, date = date_now, time = time_now)
             savetext.save()
             # serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response({'url':'https://bna-pager.herokuapp.com/'+f'{audio_save_location_django}', 'lang':language, 'text':received_text}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
