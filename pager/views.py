@@ -15,19 +15,22 @@ from rest_framework.response import Response
 from . serializers import *
 
 def indexView(request):
-    try:
-        x = requests.get('http://106.51.15.203/api/api.php?action=LIST&type=PAGE')              
-        list_of_zones = x.json()
-        context = {
-            'audio_files' : SpeechData.objects.all(),
-            'zones': list_of_zones,
-        }
-    except:
-        context = {
-            'audio_files' : SpeechData.objects.all(),
-            'zones': [["Could not fetch data"]],
-        }      
-
+    # try:
+    #     x = requests.get('http://106.51.15.203/api/api.php?action=LIST&type=PAGE')              
+    #     list_of_zones = x.json()
+    #     context = {
+    #         'audio_files' : SpeechData.objects.all(),
+    #         'zones': list_of_zones,
+    #     }
+    # except:
+    #     context = {
+    #         'audio_files' : SpeechData.objects.all(),
+    #         'zones': [["Could not fetch data"]],
+    #     }
+    context = {
+        'audio_files' : SpeechData.objects.all(),
+        'zones': [["Could not fetch data"]],
+    }      
     return render(request, 'index.html', context)
 
 def saveTextAudio(request):
